@@ -37,6 +37,7 @@ const game = {
   status: document.getElementById("status"),
   statusText: document.getElementById("status-text"),
   correctAnswerText: document.getElementById("correct-answer"),
+  start: document.getElementById("start"),
 
 
   /** -- GAME FUNCTIONS -- **/
@@ -71,7 +72,7 @@ const game = {
 
   // Start Timer
   timer(){
-
+    this.start.classList.add("d-none");
     let gt = setInterval(function () {
       // If Timer Runs Out
       if(game.timeLeft <= 0) {
@@ -90,21 +91,25 @@ const game = {
         clearInterval(gt);
       }
       game.timeRemainingText.textContent = game.timeLeft;
+      console.log(game.timeLeft);
       game.timeLeft--;
     }, 1000)
-  }
+  },
 
 
   // Check Answer
-
-  // If Answer Is Right
+  checkAnswer() {
+    // If Answer Is Right
     // Increase answersCorrect
     // Display They Got Answer Correct
     // Show Next Question After 3 Seconds
 
-  // If Answer Is Wrong
+    // If Answer Is Wrong
     // Increase answersIncorrect
     // Display They Got Answer Wrong
     // Show Next Question After 3 Seconds
+  },
+
+
 
 };
