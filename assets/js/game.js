@@ -2,6 +2,11 @@
 
 const game = {
   // Define Game Variables.
+  timeLeft: 5,
+  answersCorrect: 0,
+  answersIncorrect: 0,
+  answersUnanswered: 0,
+
   questions: [
     {
       question: "What are we doing here?",
@@ -29,19 +34,66 @@ const game = {
   timeRemainingText: document.getElementById("time-remaining"),
   questionText: document.getElementById("question"),
   answersText: document.getElementById("answers"),
+  status: document.getElementById("status"),
+  statusText: document.getElementById("status-text"),
+  correctAnswerText: document.getElementById("correct-answer"),
+
 
   /** -- GAME FUNCTIONS -- **/
   // Initialize Function
+  init() {
+    this.reset();
+  },
+
+  // Reset The Game Values.
+  reset() {
+    this.timeLeft = 30;
+    this.answersCorrect = 0;
+    this.answersIncorrect = 0;
+    this.answersUnanswered = 0;
+
+    this.questionText = this.getQuestion();
+    this.answersText = this.getAnswers();
+    this.status.classList.add("d-none");
+    this.statusText.textContent = "";
+    this.correctAnswerText.textContent = "";
+  },
 
   // Return Question
+  getQuestion() {
+
+  },
 
   // Return Answers
+  getAnswers() {
+
+  },
 
   // Start Timer
-    // If Timer Runs Out
-      // Increase answersUnanswered
-      // Display To User Time Ran Out
-      // Show Next Question After 3 Seconds
+  timer(){
+
+    let gt = setInterval(function () {
+      // If Timer Runs Out
+      if(game.timeLeft <= 0) {
+        // Increase answersUnanswered
+        game.answersUnanswered++;
+        // Hide The Answers Block
+        game.answersText.classList.add("d-none");
+        // Show The Status Block
+        game.status.classList.remove("d-none");
+        // Display To User Time Ran Out
+        game.statusText.textContent = "Time Ran Out!";
+        game.correctAnswerText.textContent = "Correct Answer is: ";
+        // Show Next Question After 3 Seconds
+
+        // Clear the Interval
+        clearInterval(gt);
+      }
+      game.timeRemainingText.textContent = game.timeLeft;
+      game.timeLeft--;
+    }, 1000)
+  }
+
 
   // Check Answer
 

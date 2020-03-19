@@ -24,3 +24,15 @@ ul li {
     cursor: pointer;
     margin-bottom:15px;
 }
+
+#start {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#start button {
+    font-size: 3rem;
+    padding: 15px;
+}
