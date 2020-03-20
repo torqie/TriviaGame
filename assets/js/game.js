@@ -3,6 +3,8 @@
 const game = {
   // Define Game Variables.
   timeLeft: 5,
+  questionNumber: 0,
+  currentQuestion: "",
   answersCorrect: 0,
   answersIncorrect: 0,
   answersUnanswered: 0,
@@ -49,25 +51,23 @@ const game = {
   // Reset The Game Values.
   reset() {
     this.timeLeft = 30;
+    this.questionNumber = 0;
+    this.currentQuestion = "";
     this.answersCorrect = 0;
     this.answersIncorrect = 0;
     this.answersUnanswered = 0;
 
-    this.questionText = this.getQuestion();
-    this.answersText = this.getAnswers();
+    this.questionText = "";
+    this.answersText = "";
     this.status.classList.add("d-none");
     this.statusText.textContent = "";
     this.correctAnswerText.textContent = "";
   },
 
-  // Return Question
+  // Return Question with the answers in it
   getQuestion() {
-
-  },
-
-  // Return Answers
-  getAnswers() {
-
+    this.currentQuestion = this.questions[this.questionNumber];
+    console.log("Question: " + this.currentQuestion);
   },
 
   // Start Timer
@@ -98,16 +98,23 @@ const game = {
 
 
   // Check Answer
-  checkAnswer() {
+  checkAnswer(userAnswer) {
     // If Answer Is Right
-    // Increase answersCorrect
-    // Display They Got Answer Correct
-    // Show Next Question After 3 Seconds
+    if(userAnswer.toLowerCase() === this.currentQuestion.question.toLowerCase()) {
+      // Increase answersCorrect
+      this.answersCorrect++;
+      // Display They Got Answer Correct
+      // Show Next Question After 3 Seconds
+    } else {
+      // If Answer Is Wrong
+      // Increase answersIncorrect
+      this.answersIncorrect++;
+      // Display They Got Answer Wrong
+      // Show Next Question After 3 Seconds
+    }
 
-    // If Answer Is Wrong
-    // Increase answersIncorrect
-    // Display They Got Answer Wrong
-    // Show Next Question After 3 Seconds
+
+
   },
 
 
