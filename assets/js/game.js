@@ -93,7 +93,7 @@ const game = {
     console.log("Question: " + this.currentQuestion.question);
   },
 
-  // Start Timer
+  // Start The Timer
   startTimer() {
     this.start.classList.add("d-none");
     this.gameTimer = setInterval(function () {
@@ -107,11 +107,12 @@ const game = {
       game.timeRemainingText.textContent = game.timeLeft;
     }, 1000);
   },
-
+  // Stop The Timer
   stopTimer() {
     clearInterval(this.gameTimer);
   },
 
+  // What to do when they run out of time
   timesUp() {
     // Increase answersUnanswered
     game.answersUnanswered++;
@@ -156,11 +157,12 @@ const game = {
     setTimeout(game.nextQuestion, 3000);
   },
 
+  // Get the Next Question
   nextQuestion() {
     console.log("Question #: " + game.questionNumber);
     console.log("Questions Len: " + game.questions.length);
     if(game.questionNumber < game.questions.length) {
-      alert("question #: " + game.questionNumber);
+
       //Reset all values dealing with the last question
       game.questionReset();
       //Get a question
@@ -177,6 +179,7 @@ const game = {
     }
   },
 
+  // Displays the answers on the screen
   displayAnswers(answers) {
     for(let i = 0; i < answers.length; i++) {
       var li = document.createElement('li');
@@ -186,8 +189,11 @@ const game = {
     }
   },
 
+  // What happens when you get to the end of the questions
   ending(){
-    alert("game over");
+    document.getElementById("inner-game").classList.add("d-none");
+    const ending = document.getElementById("ending");
+    // TODO:: update the divs with the ending values.
   }
 
 };
