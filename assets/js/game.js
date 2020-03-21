@@ -2,9 +2,10 @@
 
 const game = {
   // Define Game Variables.
-  timeLeft: 5,
+  timeLeft: 0,
+  gameTimer: 0,
   questionNumber: 0,
-  currentQuestion: "",
+  currentQuestion: {},
   answersCorrect: 0,
   answersIncorrect: 0,
   answersUnanswered: 0,
@@ -18,7 +19,8 @@ const game = {
         "To code our lives away",
         "To get a life"
       ],
-      correctAnswer: "To code our lives away"
+      correctAnswer: "To code our lives away",
+      image: "https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif"
     },
     {
       question: "What is my favorite color?",
@@ -28,7 +30,7 @@ const game = {
         "Purple",
         "Orange"
       ],
-      correctAnswer: "Blue"
+      correctAnswer: 2
     }
   ],
 
@@ -38,6 +40,7 @@ const game = {
   answersText: document.getElementById("answers"),
   status: document.getElementById("status"),
   statusText: document.getElementById("status-text"),
+  statusImage: document.getElementById("status-image"),
   correctAnswerText: document.getElementById("correct-answer"),
   start: document.getElementById("start"),
 
@@ -45,37 +48,47 @@ const game = {
   /** -- GAME FUNCTIONS -- **/
   // Initialize Function
   init() {
-    this.reset();
+    this.gameReset();
+    this.nextQuestion();
   },
 
-  // Reset The Game Values.
-  reset() {
-    this.timeLeft = 30;
-    this.questionNumber = 0;
+  questionReset() {
+    this.timeLeft = 10;
+    this.gameTimer = 10;
     this.currentQuestion = "";
-    this.answersCorrect = 0;
-    this.answersIncorrect = 0;
-    this.answersUnanswered = 0;
-
-    this.questionText = "";
-    this.answersText = "";
+    this.questionText.textContent = "";
+    this.answersText.innerHTML = "";
     this.status.classList.add("d-none");
     this.statusText.textContent = "";
     this.correctAnswerText.textContent = "";
+    this.timeRemainingText.textContent = this.timeLeft;
+  },
+
+  // Reset The Game Values.
+  gameReset() {
+    this.questionReset();
+    this.questionNumber = 0;
+    this.answersCorrect = 0;
+    this.answersIncorrect = 0;
+    this.answersUnanswered = 0;
   },
 
   // Return Question with the answers in it
   getQuestion() {
     this.currentQuestion = this.questions[this.questionNumber];
-    console.log("Question: " + this.currentQuestion);
+    this.questionNumber++;
+    console.log("Question: " + this.currentQuestion.question);
   },
 
   // Start Timer
   timer(){
+
     this.start.classList.add("d-none");
-    let gt = setInterval(function () {
+    this.gameTimer = setInterval(function () {
+      game.timeLeft--;
       // If Timer Runs Out
       if(game.timeLeft <= 0) {
+
         // Increase answersUnanswered
         game.answersUnanswered++;
         // Hide The Answers Block
@@ -84,39 +97,61 @@ const game = {
         game.status.classList.remove("d-none");
         // Display To User Time Ran Out
         game.statusText.textContent = "Time Ran Out!";
-        game.correctAnswerText.textContent = "Correct Answer is: ";
+        game.correctAnswerText.textContent = "Correct Answer is: " + game.currentQuestion.correctAnswer;
+        game.statusImage.src = game.currentQuestion.image;
         // Show Next Question After 3 Seconds
+        setTimeout(game.nextQuestion, 3000);
 
         // Clear the Interval
-        clearInterval(gt);
+        clearInterval(game.gameTimer);
       }
       game.timeRemainingText.textContent = game.timeLeft;
       console.log(game.timeLeft);
-      game.timeLeft--;
+
     }, 1000)
   },
 
-
   // Check Answer
   checkAnswer(userAnswer) {
-    // If Answer Is Right
-    if(userAnswer.toLowerCase() === this.currentQuestion.question.toLowerCase()) {
+    // CHeck if userAnswer matches the
+    if(parseInt(userAnswer) === parseInt(this.currentQuestion.correctAnswer)) {
+      // -- If Answer is right -- //
       // Increase answersCorrect
       this.answersCorrect++;
       // Display They Got Answer Correct
+      this.statusText.textContent = "Correct!";
       // Show Next Question After 3 Seconds
+      setTimeout(this.nextQuestion, 3000);
     } else {
-      // If Answer Is Wrong
+      // -- If Answer Is Wrong -- //
       // Increase answersIncorrect
       this.answersIncorrect++;
       // Display They Got Answer Wrong
       // Show Next Question After 3 Seconds
     }
-
-
-
   },
 
+  nextQuestion() {
+    //Reset all values dealing with the last question
+    game.questionReset();
+    //Get a question
+    game.getQuestion();
+    // Show The question.
+    game.questionText.textContent = game.currentQuestion.question;
+    //Show the answers
+    game.displayAnswers(game.currentQuestion.answers);
+    game.answersText.classList.remove("d-none");
+    // Start the timer
+    game.timer();
+  },
 
+  displayAnswers(answers) {
+    for(let i = 0; i < answers.length; i++) {
+      var li = document.createElement('li');
+      li.value = i;
+      li.textContent = answers[i];
+      document.getElementById("answers").appendChild(li);
+    }
+  }
 
 };
