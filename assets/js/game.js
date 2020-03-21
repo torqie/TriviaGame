@@ -19,7 +19,7 @@ const game = {
         "To code our lives away",
         "To get a life"
       ],
-      correctAnswer: "To code our lives away",
+      correctAnswerIndex: 2,
       image: "https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif"
     },
     {
@@ -30,7 +30,7 @@ const game = {
         "Purple",
         "Orange"
       ],
-      correctAnswer: 2
+      correctAnswerIndex: 1
     }
   ],
 
@@ -53,12 +53,13 @@ const game = {
   },
 
   questionReset() {
-    this.timeLeft = 10;
-    this.gameTimer = 10;
+    this.timeLeft = 5;
+    this.gameTimer = 5;
     this.currentQuestion = "";
     this.questionText.textContent = "";
     this.answersText.innerHTML = "";
     this.status.classList.add("d-none");
+    this.answersText.classList.remove("d-none");
     this.statusText.textContent = "";
     this.correctAnswerText.textContent = "";
     this.timeRemainingText.textContent = this.timeLeft;
@@ -81,10 +82,10 @@ const game = {
   },
 
   // Start Timer
-  timer(){
-
+  timer() {
     this.start.classList.add("d-none");
     this.gameTimer = setInterval(function () {
+      // Decrement the time left
       game.timeLeft--;
       // If Timer Runs Out
       if(game.timeLeft <= 0) {
@@ -106,29 +107,35 @@ const game = {
         clearInterval(game.gameTimer);
       }
       game.timeRemainingText.textContent = game.timeLeft;
-      console.log(game.timeLeft);
+      console.log("Time Left: " + game.timeLeft);
 
     }, 1000)
   },
 
   // Check Answer
   checkAnswer(userAnswer) {
+    this.answersText.classList.add("d-none");
+    this.status.classList.remove("d-none");
+    clearInterval(this.gameTimer);
+
     // CHeck if userAnswer matches the
-    if(parseInt(userAnswer) === parseInt(this.currentQuestion.correctAnswer)) {
+    if(parseInt(userAnswer) === parseInt(this.currentQuestion.correctAnswerIndex)) {
       // -- If Answer is right -- //
       // Increase answersCorrect
       this.answersCorrect++;
+      console.log("Answers Correct: " + this.answersCorrect);
       // Display They Got Answer Correct
       this.statusText.textContent = "Correct!";
-      // Show Next Question After 3 Seconds
-      setTimeout(this.nextQuestion, 3000);
     } else {
       // -- If Answer Is Wrong -- //
       // Increase answersIncorrect
       this.answersIncorrect++;
+      console.log("Answers Incorrect: " + this.answersIncorrect);
       // Display They Got Answer Wrong
+      this.statusText.textContent = "Incorrect!";
       // Show Next Question After 3 Seconds
     }
+    setTimeout(game.nextQuestion, 3000);
   },
 
   nextQuestion() {
