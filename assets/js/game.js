@@ -65,8 +65,8 @@ const game = {
   },
 
   questionReset() {
-    this.timeLeft = 5;
-    this.gameTimer = 5;
+    this.timeLeft = 30;
+    this.gameTimer = 30;
     this.currentQuestion = "";
     this.questionText.textContent = "";
     this.answersText.innerHTML = "";
@@ -101,31 +101,33 @@ const game = {
       game.timeLeft--;
       // If Timer Runs Out
       if(game.timeLeft <= 0) {
-
-        // Increase answersUnanswered
-        game.answersUnanswered++;
-        // Hide The Answers Block
-        game.answersText.classList.add("d-none");
-        // Show The Status Block
-        game.status.classList.remove("d-none");
-        // Display To User Time Ran Out
-        game.statusText.textContent = "Time Ran Out!";
-        game.correctAnswerText.textContent = "Correct Answer is: " + game.currentQuestion.answers[game.currentQuestion.correctAnswerIndex];
-        game.statusImage.src = game.currentQuestion.image;
-        // Show Next Question After 3 Seconds
-        setTimeout(game.nextQuestion, 3000);
-
-        // Clear the Interval
-        game.stopTimer();
+        //Ran out of time
+        game.timesUp();
       }
       game.timeRemainingText.textContent = game.timeLeft;
-      //console.log("Time Left: " + game.timeLeft);
-
-    }, 1000)
+    }, 1000);
   },
 
   stopTimer() {
     clearInterval(this.gameTimer);
+  },
+
+  timesUp() {
+    // Increase answersUnanswered
+    game.answersUnanswered++;
+    // Hide The Answers Block
+    game.answersText.classList.add("d-none");
+    // Show The Status Block
+    game.status.classList.remove("d-none");
+    // Display To User Time Ran Out
+    game.statusText.textContent = "Time Ran Out!";
+    game.correctAnswerText.textContent = "Correct Answer is: " + game.currentQuestion.answers[game.currentQuestion.correctAnswerIndex];
+    game.statusImage.src = game.currentQuestion.image;
+    // Clear the Interval
+    game.stopTimer();
+    // Show Next Question After 3 Seconds
+    setTimeout(game.nextQuestion, 3000);
+
   },
 
   // Check Answer
