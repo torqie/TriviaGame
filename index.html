@@ -37,35 +37,38 @@
         </div>
 
         <!-- Seconds Remaining to answer the question -->
-        <div class="row">
-            <div class="col-12">
-                <p>Time Remaining: <span id="time-remaining">3</span> Seconds</p>
-            </div>
-        </div>
-
-        <!-- Question being asked -->
-        <div class="row">
-            <div class="col-12">
-                <p id="question"></p>
-            </div>
-        </div>
-        <hr />
-        <!-- List of possible answers -->
-        <div class="row">
-            <div class="col-12 col-lg-6 offset-lg-3">
-                <ul id="answers"></ul>
-            </div>
-        </div>
-
-        <div id="status" class="d-none">
+        <div class="inner-game">
             <div class="row">
                 <div class="col-12">
-                    <h1 id="status-text">Correct!</h1>
-                    <p id="correct-answer"></p>
-                    <img id="status-image" src="" alt="" />
+                    <p>Time Remaining: <span id="time-remaining">3</span> Seconds</p>
+                </div>
+            </div>
+
+            <!-- Question being asked -->
+            <div class="row">
+                <div class="col-12">
+                    <p id="question"></p>
+                </div>
+            </div>
+            <hr />
+            <!-- List of possible answers -->
+            <div class="row">
+                <div class="col-12 col-lg-6 offset-lg-3">
+                    <ul id="answers"></ul>
+                </div>
+            </div>
+
+            <div id="status" class="d-none">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 id="status-text">Correct!</h1>
+                        <p id="correct-answer"></p>
+                        <img id="status-image" src="" alt="" />
+                    </div>
                 </div>
             </div>
         </div>
+
 
     </div>
     <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

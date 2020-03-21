@@ -12,25 +12,37 @@ const game = {
 
   questions: [
     {
-      question: "What are we doing here?",
+      question: "In S1E1 \"Pilot\": Who started their first day at Dunder Mifflin Scranton?",
       answers: [
-        "I have no idea",
-        "To save the WORLD",
-        "To code our lives away",
-        "To get a life"
+        "Jim Halpert",
+        "Ryan Howard",
+        "Michael Scott",
+        "Erin Hannon"
       ],
-      correctAnswerIndex: 2,
-      image: "https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif"
+      correctAnswerIndex: 1,
+      image: "https://media.giphy.com/media/g6yDMd9nBE4Ny/giphy.gif"
     },
     {
-      question: "What is my favorite color?",
+      question: "In S1E2 \"Diversity Day\": What famous comedian's stand up routine does Michael imitate?",
       answers: [
-        "Green",
-        "Blue",
-        "Purple",
-        "Orange"
+        "Chris Rock",
+        "Richard Pryor",
+        "Robin Williams",
+        "George Carlin"
       ],
-      correctAnswerIndex: 1
+      correctAnswerIndex: 0,
+      image: "https://media.giphy.com/media/jOpLbiGmHR9S0/giphy.gif"
+    },
+    {
+      question: "In S1E3 \"Health Care\": Which of these is NOT one of Jim and Pam's made up diseases?",
+      answers: [
+        "Killer nanorobots",
+        "Hot dog fingers",
+        "Spontaneous dental hydroplosion",
+        "Hair Cancer"
+      ],
+      correctAnswerIndex: 3,
+      image: "https://media.giphy.com/media/muGYyrWwxOOMo/giphy.gif"
     }
   ],
 
@@ -82,7 +94,7 @@ const game = {
   },
 
   // Start Timer
-  timer() {
+  startTimer() {
     this.start.classList.add("d-none");
     this.gameTimer = setInterval(function () {
       // Decrement the time left
@@ -98,25 +110,29 @@ const game = {
         game.status.classList.remove("d-none");
         // Display To User Time Ran Out
         game.statusText.textContent = "Time Ran Out!";
-        game.correctAnswerText.textContent = "Correct Answer is: " + game.currentQuestion.correctAnswer;
+        game.correctAnswerText.textContent = "Correct Answer is: " + game.currentQuestion.answers[game.currentQuestion.correctAnswerIndex];
         game.statusImage.src = game.currentQuestion.image;
         // Show Next Question After 3 Seconds
         setTimeout(game.nextQuestion, 3000);
 
         // Clear the Interval
-        clearInterval(game.gameTimer);
+        game.stopTimer();
       }
       game.timeRemainingText.textContent = game.timeLeft;
-      console.log("Time Left: " + game.timeLeft);
+      //console.log("Time Left: " + game.timeLeft);
 
     }, 1000)
+  },
+
+  stopTimer() {
+    clearInterval(this.gameTimer);
   },
 
   // Check Answer
   checkAnswer(userAnswer) {
     this.answersText.classList.add("d-none");
     this.status.classList.remove("d-none");
-    clearInterval(this.gameTimer);
+    this.stopTimer();
 
     // CHeck if userAnswer matches the
     if(parseInt(userAnswer) === parseInt(this.currentQuestion.correctAnswerIndex)) {
@@ -139,17 +155,24 @@ const game = {
   },
 
   nextQuestion() {
-    //Reset all values dealing with the last question
-    game.questionReset();
-    //Get a question
-    game.getQuestion();
-    // Show The question.
-    game.questionText.textContent = game.currentQuestion.question;
-    //Show the answers
-    game.displayAnswers(game.currentQuestion.answers);
-    game.answersText.classList.remove("d-none");
-    // Start the timer
-    game.timer();
+    console.log("Question #: " + game.questionNumber);
+    console.log("Questions Len: " + game.questions.length);
+    if(game.questionNumber < game.questions.length) {
+      alert("question #: " + game.questionNumber);
+      //Reset all values dealing with the last question
+      game.questionReset();
+      //Get a question
+      game.getQuestion();
+      // Show The question.
+      game.questionText.textContent = game.currentQuestion.question;
+      //Show the answers
+      game.displayAnswers(game.currentQuestion.answers);
+      game.answersText.classList.remove("d-none");
+      // Start the timer
+      game.startTimer();
+    } else {
+      game.ending();
+    }
   },
 
   displayAnswers(answers) {
@@ -159,6 +182,10 @@ const game = {
       li.textContent = answers[i];
       document.getElementById("answers").appendChild(li);
     }
+  },
+
+  ending(){
+    alert("game over");
   }
 
 };
