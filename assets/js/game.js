@@ -43,7 +43,84 @@ const game = {
       ],
       correctAnswerIndex: 3,
       image: "https://media.giphy.com/media/muGYyrWwxOOMo/giphy.gif"
-    }
+    },
+    {
+      question: "In the pilot episode, how many years did Michael say he worked at Dunder Mifflin?",
+      answers: [
+        "10",
+        "11",
+        "12",
+        "14"
+      ],
+      correctAnswerIndex: 2,
+      image: "https://img.buzzfeed.com/buzzfeed-static/static/2020-02/25/19/enhanced/3b12ac43a57b/enhanced-475-1582658676-12.png"
+    },
+    {
+      question: "What item of Michael's did Jim put into jello?",
+      answers: [
+        "Stapler",
+        "Desk Nameplate",
+        "Mug",
+        "Pen"
+      ],
+      correctAnswerIndex: 2,
+      image: "https://img.buzzfeed.com/buzzfeed-static/static/2020-01/22/4/enhanced/dff4b266d51f/enhanced-919-1579666255-1.jpg"
+    },
+    {
+      question: "What game does Angela tell Pam that she likes to play in the office?",
+      answers: [
+        "Jim Ball",
+        "Pam Pong",
+        "Cat Charades",
+        "Michael Monopoly"
+      ],
+      correctAnswerIndex: 1,
+      image: "https://img.buzzfeed.com/buzzfeed-static/static/2020-02/25/19/enhanced/dc5c4495fbfe/enhanced-621-1582658883-2.jpg"
+    },
+    {
+      question: "What is Michael’s middle name?",
+      answers: [
+        "Kurt",
+        "Lee",
+        "Jerry",
+        "Gary"
+      ],
+      correctAnswerIndex: 3,
+      image: "https://img.buzzfeed.com/buzzfeed-static/static/2020-02/25/19/enhanced/8297aca676b1/enhanced-620-1582659017-4.jpg"
+    },
+    {
+      question: "What was Jim's official title at the Stamford branch?",
+      answers: [
+        "Director of Sales",
+        "Assistant Regional Manager",
+        "Head of Sales",
+        "Assistant to the Regional Manager"
+      ],
+      correctAnswerIndex: 1,
+      image: "https://img.buzzfeed.com/buzzfeed-static/static/2020-01/22/4/enhanced/87851ffa7b24/enhanced-932-1579667054-1.jpg"
+    },
+    {
+      question: "What word did Dwight have taped to his forehead in the \"Diversity Day\" episode?",
+      answers: [
+        "Asian",
+        "Black",
+        "Jewish",
+        "Indian"
+      ],
+      correctAnswerIndex: 0,
+      image: "https://img.buzzfeed.com/buzzfeed-static/static/2020-01/22/4/enhanced/dff4b266d51f/enhanced-919-1579667408-5.jpg"
+    },
+    {
+      question: "On what day did Ryan and Kelly first hook up?",
+      answers: [
+        "February 12th",
+        "February 13th",
+        "February 14th",
+        "February 15th"
+      ],
+      correctAnswerIndex: 1,
+      image: "https://img.buzzfeed.com/buzzfeed-static/static/2020-01/22/4/enhanced/6bae1359bd61/enhanced-939-1579667787-1.jpg"
+    },
   ],
 
   // Define DIV Variables.
@@ -62,11 +139,13 @@ const game = {
   init() {
     this.gameReset();
     this.nextQuestion();
+    document.getElementById("inner-game").classList.remove("d-none");
+    document.getElementById("ending").classList.add("d-none");
   },
 
   questionReset() {
-    this.timeLeft = 30;
-    this.gameTimer = 30;
+    this.timeLeft = 5;
+    this.gameTimer = 5;
     this.currentQuestion = "";
     this.questionText.textContent = "";
     this.answersText.innerHTML = "";
@@ -84,6 +163,11 @@ const game = {
     this.answersCorrect = 0;
     this.answersIncorrect = 0;
     this.answersUnanswered = 0;
+  },
+
+  restart() {
+    this.start.classList.remove('d-none');
+    this.gameReset();
   },
 
   // Return Question with the answers in it
@@ -145,6 +229,7 @@ const game = {
       console.log("Answers Correct: " + this.answersCorrect);
       // Display They Got Answer Correct
       this.statusText.textContent = "Correct!";
+      game.statusImage.src = game.currentQuestion.image;
     } else {
       // -- If Answer Is Wrong -- //
       // Increase answersIncorrect
@@ -152,6 +237,8 @@ const game = {
       console.log("Answers Incorrect: " + this.answersIncorrect);
       // Display They Got Answer Wrong
       this.statusText.textContent = "Incorrect!";
+      game.correctAnswerText.textContent = "Correct Answer is: " + game.currentQuestion.answers[game.currentQuestion.correctAnswerIndex];
+      game.statusImage.src = game.currentQuestion.image;
       // Show Next Question After 3 Seconds
     }
     setTimeout(game.nextQuestion, 3000);
@@ -193,7 +280,11 @@ const game = {
   ending(){
     document.getElementById("inner-game").classList.add("d-none");
     const ending = document.getElementById("ending");
-    // TODO:: update the divs with the ending values.
+    // update the divs with the ending values.
+    document.getElementById("ending-correct").textContent = this.answersCorrect;
+    document.getElementById("ending-incorrect").textContent = this.answersIncorrect;
+    document.getElementById("ending-unanswered").textContent = this.answersUnanswered;
+    document.getElementById("ending").classList.remove("d-none");
   }
 
 };

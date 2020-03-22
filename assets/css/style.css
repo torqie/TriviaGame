@@ -2,6 +2,10 @@ html{}
 body{
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 1.2rem;
+    background: url("../images/background.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Ubuntu', sans-serif;
@@ -40,4 +44,18 @@ ul li:hover {
 #start button {
     font-size: 3rem;
     padding: 15px;
+}
+
+.game {
+    background-color: rgba(255,255,255,.8);
+    border: 1px solid black;
+    margin-top: 50px;
+    padding:40px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 0px solid #000000;
 }
