@@ -139,8 +139,7 @@ const game = {
   init() {
     this.gameReset();
     this.nextQuestion();
-    document.getElementById("inner-game").classList.remove("d-none");
-    document.getElementById("ending").classList.add("d-none");
+
   },
 
   questionReset() {
@@ -168,6 +167,8 @@ const game = {
   restart() {
     this.start.classList.remove('d-none');
     this.gameReset();
+    document.getElementById("inner-game").classList.remove("d-none");
+    document.getElementById("ending").classList.add("d-none");
   },
 
   // Return Question with the answers in it
@@ -246,8 +247,7 @@ const game = {
 
   // Get the Next Question
   nextQuestion() {
-    console.log("Question #: " + game.questionNumber);
-    console.log("Questions Len: " + game.questions.length);
+    document.getElementById("game").classList.remove("d-none");
     if(game.questionNumber < game.questions.length) {
 
       //Reset all values dealing with the last question
