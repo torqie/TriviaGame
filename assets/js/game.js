@@ -144,8 +144,8 @@ const game = {
   },
 
   questionReset() {
-    this.timeLeft = 5;
-    this.gameTimer = 5;
+    this.timeLeft = 15;
+    this.gameTimer = 15;
     this.currentQuestion = "";
     this.questionText.textContent = "";
     this.answersText.innerHTML = "";
@@ -211,7 +211,7 @@ const game = {
     // Clear the Interval
     game.stopTimer();
     // Show Next Question After 3 Seconds
-    setTimeout(game.nextQuestion, 3000);
+    setTimeout(game.nextQuestion, 4000);
 
   },
 
@@ -241,7 +241,7 @@ const game = {
       game.statusImage.src = game.currentQuestion.image;
       // Show Next Question After 3 Seconds
     }
-    setTimeout(game.nextQuestion, 3000);
+    setTimeout(game.nextQuestion, 4000);
   },
 
   // Get the Next Question
